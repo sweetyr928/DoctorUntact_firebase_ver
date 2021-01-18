@@ -100,7 +100,7 @@ public class StartActivity extends AppCompatActivity {
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"("+unread+") Chats");
 
                 }
-                viewPagerAdpter.addaFragment(new UsersFragment(),"Users");
+                viewPagerAdpter.addaFragment(new UsersFragment(),"Board");
                 viewPagerAdpter.addaFragment(new ProfileFragment(),"Profile");
 
                 // 탭

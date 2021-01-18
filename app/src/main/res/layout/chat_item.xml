@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/gotochat_btn"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F4F6F6"
     android:padding="15dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_imageview"
+        android:id="@+id/profile_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/prof">
@@ -17,49 +14,56 @@
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
-        android:id="@+id/nickname_textview"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:layout_toEndOf="@+id/profile_imageview"
-        android:layout_toRightOf="@+id/profile_imageview"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_toRightOf="@+id/profile_image"
         android:text="Username"
         android:textColor="@color/backg"
         android:textSize="20dp">
 
     </TextView>
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_on"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_toRightOf="@+id/profile_image"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        app:civ_border_color="@color/backg"
+        app:civ_border_width="10dp"></de.hdodenhof.circleimageview.CircleImageView>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_off"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@+id/profile_image"
+        android:layout_toRightOf="@+id/profile_image"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        app:civ_border_color="#C3BABA"
+        app:civ_border_width="10dp"></de.hdodenhof.circleimageview.CircleImageView>
+
     <TextView
-        android:id="@+id/title_textview"
+        android:id="@+id/last_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nickname_textview"
+        android:layout_below="@+id/username"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/profile_imageview"
+        android:layout_toRightOf="@+id/profile_image"
         android:maxLines="1"
         android:paddingTop="5dp"
         android:textColor="#40E413"></TextView>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="65dp"
-        android:layout_height="64dp"
-        android:layout_marginLeft="272dp"
-        android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/profile_imageview"
-        android:backgroud="@color/backg"
-        android:text="Go"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="@color/backg"></Button>
-
-    <TextView
-        android:id="@+id/date_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_marginTop="50dp"
-        android:text="time"/>
 </RelativeLayout>
