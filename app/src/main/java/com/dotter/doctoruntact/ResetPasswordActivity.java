@@ -41,17 +41,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 String email = send_email.getText().toString();
 
                 if (email.equals("")){
-                    Toast.makeText(com.example.chatapp.ResetPasswordActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(com.dotter.doctoruntact.ResetPasswordActivity.this, "All Fields Are Required", Toast.LENGTH_SHORT).show();
                 }else {
                     firebaseAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(com.example.chatapp.ResetPasswordActivity.this, "Please Check Your Email", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(com.example.chatapp.ResetPasswordActivity.this,LoginActivity.class));
+                                Toast.makeText(com.dotter.doctoruntact.ResetPasswordActivity.this, "Please Check Your Email", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(com.dotter.doctoruntact.ResetPasswordActivity.this,LoginActivity.class));
                             }else {
                                 String error =task.getException().getMessage();
-                                Toast.makeText(com.example.chatapp.ResetPasswordActivity.this,error, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(com.dotter.doctoruntact.ResetPasswordActivity.this,error, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

@@ -57,9 +57,9 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(txt_userrname) || TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password))
                 {
-                    Toast.makeText(com.example.chatapp.RegisterActivity.this, "All Feilds Are Required !", Toast.LENGTH_SHORT);
+                    Toast.makeText(com.dotter.doctoruntact.RegisterActivity.this, "All Feilds Are Required !", Toast.LENGTH_SHORT);
                 } else if (txt_password.length() < 6) {
-                    Toast.makeText(com.example.chatapp.RegisterActivity.this, "Password Length Is < 6!", Toast.LENGTH_SHORT);
+                    Toast.makeText(com.dotter.doctoruntact.RegisterActivity.this, "Password Length Is < 6!", Toast.LENGTH_SHORT);
                 } else {
                     register(txt_userrname,txt_email,txt_password);
                 }
@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(com.example.chatapp.RegisterActivity.this, com.example.chatapp.StartActivity.class);
+                                Intent intent = new Intent(com.dotter.doctoruntact.RegisterActivity.this, com.dotter.doctoruntact.StartActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                     });
 
                 } else {
-                    Toast.makeText(com.example.chatapp.RegisterActivity.this, "You Can't Register With This Email!!", Toast.LENGTH_SHORT);
+                    Toast.makeText(com.dotter.doctoruntact.RegisterActivity.this, "You Can't Register With This Email!!", Toast.LENGTH_SHORT);
                 }
             }
         });

@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.chatapp.MessageActivity;
-import com.example.chatapp.R;
+import com.dotter.doctoruntact.MessageActivity;
+import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

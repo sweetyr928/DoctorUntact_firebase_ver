@@ -50,7 +50,7 @@
         forgot_password.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(com.example.chatapp.LoginActivity.this, com.example.chatapp.ResetPasswordActivity.class));
+                startActivity(new Intent(com.dotter.doctoruntact.LoginActivity.this, com.dotter.doctoruntact.ResetPasswordActivity.class));
             }
         });
 
@@ -69,18 +69,18 @@
 
                 if ( TextUtils.isEmpty(txt_email) || TextUtils.isEmpty(txt_password))
                 {
-                    Toast.makeText(com.example.chatapp.LoginActivity.this, "All Fields Are Required !", Toast.LENGTH_SHORT);
+                    Toast.makeText(com.dotter.doctoruntact.LoginActivity.this, "All Fields Are Required !", Toast.LENGTH_SHORT);
                 } else {
                     auth.signInWithEmailAndPassword(txt_email,txt_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(com.example.chatapp.LoginActivity.this, MainActivity.class); // 메인메뉴로 넘어가기
+                                Intent intent = new Intent(com.dotter.doctoruntact.LoginActivity.this, MainActivity.class); // 메인메뉴로 넘어가기
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK); // 실행 액티비티 외 모두 제거 | 실행하는 액티비티를 새 태스크로 생성, 동족이 있으면 그 태스크로 들어감
                                 startActivity(intent);
                                 finish();
                             }  else {
-                                Toast.makeText(com.example.chatapp.LoginActivity.this, "Authentication Is failed!", Toast.LENGTH_SHORT);
+                                Toast.makeText(com.dotter.doctoruntact.LoginActivity.this, "Authentication Is failed!", Toast.LENGTH_SHORT);
                             }
                         }
                     });

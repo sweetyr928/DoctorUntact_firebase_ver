@@ -83,7 +83,7 @@ public class MessageActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), com.example.chatapp.StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                startActivity(new Intent(getApplicationContext(), com.dotter.doctoruntact.StartActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -111,7 +111,7 @@ public class MessageActivity extends AppCompatActivity {
                 if (!msg.equals("")) {
                     sendMessage(fuser.getUid(), userid, msg);
                 } else {
-                    Toast.makeText(com.example.chatapp.MessageActivity.this, "You Can't Send Empty Message", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, "You Can't Send Empty Message", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
             }
@@ -243,7 +243,7 @@ public class MessageActivity extends AppCompatActivity {
                         public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                             if (response.code()==200){
                                 if (response.body().success != 1){
-                                    Toast.makeText(com.example.chatapp.MessageActivity.this,"Failed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(com.dotter.doctoruntact.MessageActivity.this,"Failed", Toast.LENGTH_SHORT).show();
 
                                 }
                             }
@@ -284,7 +284,7 @@ public class MessageActivity extends AppCompatActivity {
                         mChat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(com.example.chatapp.MessageActivity.this, mChat, imageurl);
+                    messageAdapter = new MessageAdapter(com.dotter.doctoruntact.MessageActivity.this, mChat, imageurl);
                     recyclerView.setAdapter(messageAdapter);
                 }
 
