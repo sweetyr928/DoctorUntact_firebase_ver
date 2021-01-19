@@ -1,42 +1,29 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Board {
 
-    private int profile_image;//안드로이드 앱 제작시에 자신이 원하는 이미지를 프로젝트에 포함하여 그 이미지를 불러오는 것을 테스트 -> 추 후 수정
-    private String nickname;
-    private String title;
+    public String name;
+    public String title;
 
-    public Board(int profile_image, String nickname, String title) {
-        this.profile_image = profile_image;
-        this.nickname = nickname;
+    public Board(String name, String title) {
+        this.name = name;
         this.title = title;
-
-    } //생성자
-
-    public Board(){}
-
-    public int getProfile_image() {
-        return profile_image;
     }
 
-    public void setProfile_image(int profile_image) {
-        this.profile_image = profile_image;
-    }
+    public static ArrayList<Board> createBoardList() {
+        ArrayList<Board> contacts = new ArrayList<Board>();
 
-    public String getNickname() {
-        return nickname;
-    }
+        contacts.add(new Board("Simon", "HeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadacheHeadache"));
+        contacts.add(new Board("Simon2", "Headache"));
+        contacts.add(new Board("Simon3", "Headache"));
+        contacts.add(new Board("Simon4", "Headache"));
+        contacts.add(new Board("Simon5", "Headache"));
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
+        return contacts;
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
 }
+

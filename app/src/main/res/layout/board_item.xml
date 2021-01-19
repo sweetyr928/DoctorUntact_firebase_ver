@@ -17,7 +17,7 @@
     </de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
-        android:id="@+id/nickname_textview"
+        android:id="@+id/nametext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
@@ -31,27 +31,31 @@
     </TextView>
 
     <TextView
-        android:id="@+id/title_textview"
-        android:layout_width="wrap_content"
+        android:id="@+id/titletext"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nickname_textview"
         android:layout_marginLeft="9dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/profile_imageview"
-        android:maxLines="1"
+        android:inputType="textMultiLine"
+        android:maxLines="10"
         android:paddingTop="5dp"
-        android:textColor="#40E413"></TextView>
+        android:text="text"
+        android:textSize="14dp"
+        android:textColor="@color/backg"></TextView>
 
     <Button
         android:id="@+id/gotochat_btn"
         android:layout_width="65dp"
         android:layout_height="64dp"
-        android:layout_marginLeft="272dp"
+        android:layout_marginLeft="-60dp"
         android:layout_marginTop="0dp"
-        android:layout_toRightOf="@+id/profile_imageview"
+        android:layout_toRightOf="@+id/titletext"
+        android:background="@drawable/button_background"
         android:text="Go"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:backgroundTint="#69CDDA"></Button>
+        android:textStyle="bold"></Button>
 
 </RelativeLayout>

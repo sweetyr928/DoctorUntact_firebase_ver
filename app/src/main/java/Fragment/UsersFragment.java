@@ -1,4 +1,4 @@
-package Fragment;
+/*package Fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -125,4 +125,4 @@ public class UsersFragment extends Fragment {
         });
     }
 
-}
+}*/
