@@ -1,13 +1,16 @@
 package Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.widget.Button;
+import android.view.View.OnClickListener;
 import com.bumptech.glide.Glide;
+import com.dotter.doctoruntact.MessageActivity;
 import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,7 +68,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
             super(view);
             nametext = (TextView) view.findViewById(R.id.nametext);
             titletext = (TextView) view.findViewById(R.id.titletext);
+
         }
     }
+
 
 }

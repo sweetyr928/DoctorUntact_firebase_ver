@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import java.util.ArrayList;
+import android.widget.Button;
+import android.view.View.OnClickListener;
+import android.content.Intent;
+import com.dotter.doctoruntact.MessageActivity;
 
 public class BoardFragment extends Fragment{
 
@@ -28,6 +33,7 @@ public class BoardFragment extends Fragment{
         ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_board, container, false);
 
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+
 
         list = Board.createBoardList();
         recyclerView.setHasFixedSize(true);
