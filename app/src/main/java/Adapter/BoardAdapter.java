@@ -20,20 +20,26 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import model.Board;
+import model.Chat;
+
 import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
     private Context context;
-    private List<Board> list = new ArrayList<>();
+    private ArrayList<Board> list;
 
-    public BoardAdapter(Context context, List<Board> list) {
+    //어댑터에서 액티비티 액션을 가져올 때 context가 필요한데 어댑터에는 context가 없다.
+    //선택한 액티비티에 대한 context를 가져올 때 필요하다.
+
+    public BoardAdapter(Context context, ArrayList<Board> list) {
         this.context = context;
         this.list = list;
     }
 
     // ViewHolder 생성
     // row layout을 화면에 뿌려주고 holder에 연결
+    //실제 리스트뷰가 어댑터에 연결된 다음에 뷰 홀더를 최초로 만들어낸다.
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.board_item, parent, false);
@@ -48,10 +54,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         // 각 위치에 문자열 세팅
-        int itemposition = position;
-        holder.nametext.setText(list.get(itemposition).name);
-        holder.titletext.setText(list.get(itemposition).title);
 
+        holder.nametext.setText(list.get(position).getName());
+        holder.titletext.setText(list.get(position).getTitle());
     }
 
     // 몇개의 데이터를 리스트로 뿌려줘야하는지 반드시 정의해줘야한다
@@ -64,6 +69,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
     public class Holder extends RecyclerView.ViewHolder{
         public TextView nametext;
         public TextView titletext;
+
         public Holder(View view){
             super(view);
             nametext = (TextView) view.findViewById(R.id.nametext);

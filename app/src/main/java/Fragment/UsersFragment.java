@@ -1,4 +1,4 @@
-/*package Fragment;
+package Fragment;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -31,6 +31,7 @@ import model.User;
 
 public class UsersFragment extends Fragment {
     private RecyclerView recyclerView;
+    private UserAdapter userAdapter;
     private List<User> mUsers;
 
     EditText search_users;
@@ -125,4 +126,4 @@ public class UsersFragment extends Fragment {
         });
     }
 
-}*/
+}
