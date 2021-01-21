@@ -142,7 +142,7 @@ public class MessageActivity extends AppCompatActivity {
             }
         });*/
 
-        reference.addValueEventListener(new ValueEventListener(){
+       /* reference.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 long date = dataSnapshot.getValue(Long.class);
@@ -152,7 +152,7 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
             }
-        });
+        });*/
 
 
 
@@ -208,6 +208,7 @@ public class MessageActivity extends AppCompatActivity {
         
     }
 
+    //타임스탬프 변경
     public String getTimeDate(long timestamp){
         try{
             Date netDate = (new Date(timestamp));
@@ -228,7 +229,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
         hashMap.put("isseen", false);
-        hashMap.put("timestamp", timestamp);
+        hashMap.put("timestamp", ServerValue.TIMESTAMP);
 
         reference.child("Chats").push().setValue(hashMap); // 데베 'Chats' 에 메세지 push
 
@@ -317,7 +318,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void readMessages(final String myid, final String userid, final String imageurl) {
+    private void readMessages(final String myid, final String userid, final String imageurl  ) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -347,6 +348,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void curruntUser(String userid){
         SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();

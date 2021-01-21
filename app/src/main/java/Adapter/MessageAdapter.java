@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.content.Context;
+import android.preference.Preference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +30,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
     private List<Chat> mChat;
     private String imageurl;
-    private Long timestamp;
+    private Long mTimestamp;
     FirebaseUser fuser;
 
 
-    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl, Long timestamp){
+    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl, Long mTimestamp){
         this.mContext = mcontext;
         this.mChat = mChat;
         this.imageurl=imageurl;
-        this.timestamp = timestamp;
+        this.mTimestamp = mTimestamp;
     }
 
     @NonNull
@@ -58,6 +59,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chat chat = mChat.get(position);
         holder.show_message.setText(chat.getMessage());
+        holder.mTimestamp.setText(String.valueOf(chat.getTimestamp()));
         if (imageurl.equals("default")) {
             holder.profile_image.setImageResource(R.drawable.prof);
         } else {
@@ -75,6 +77,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
 
+
     @Override
     public int getItemCount() {
         return mChat.size();
@@ -85,14 +88,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView show_message;
         public ImageView profile_image;
         public TextView txt_seen;
-        public TextView timestamp;
+        public TextView mTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
-            timestamp = itemView.findViewById(R.id.timestamp);
+            mTimestamp = itemView.findViewById(R.id.timestamp);
         }
     }
 
