@@ -21,6 +21,16 @@
         android:background="@drawable/background_left" />
 
     <TextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_toEndOf="@+id/show_message"
+        android:layout_toRightOf="@+id/show_message"
+        android:text="123123"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txt_seen"

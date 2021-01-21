@@ -21,7 +21,8 @@ import java.util.HashMap;
 
 import Fragment.ChatsFragment;
 import Fragment.ProfileFragment;
-import Fragment.BoardFragment;
+//import Fragment.BoardFragment;
+import Fragment.UsersFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,8 +101,8 @@ public class StartActivity extends AppCompatActivity {
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"("+unread+") Chats");
 
                 }
-                viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
-
+                //viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
+                viewPagerAdpter.addaFragment(new UsersFragment(),"Users");
                 viewPagerAdpter.addaFragment(new ProfileFragment(),"Profile");
 
                 // 탭

@@ -3,6 +3,7 @@ package com.dotter.doctoruntact;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,11 +18,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import Adapter.MessageAdapter;
 import Fragment.APIService;
@@ -43,6 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
+    private static final String TAG = "MessageActivity";
     CircleImageView profile_image;
     TextView username;
 
@@ -51,6 +57,7 @@ public class MessageActivity extends AppCompatActivity {
     EditText text_send;
     MessageAdapter messageAdapter;
     List<Chat> mChat;
+    Long timestamp;
     RecyclerView recyclerView;
 
 
@@ -117,6 +124,38 @@ public class MessageActivity extends AppCompatActivity {
             }
         }); //메세지 전송
 
+        //타임스탬프
+        /*reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String time = null;
+                Date date = new Date(snapshot.getValue(Long.class));
+                SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss",
+                        Locale.getDefault());
+                String text = sfd.format(date);
+                System.out.println(text);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });*/
+
+        reference.addValueEventListener(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                long date = dataSnapshot.getValue(Long.class);
+                Log.d(TAG, getTimeDate(date));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
+            }
+        });
+
+
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -136,7 +175,8 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });//프로필 가져오기
+
         seenMessage(userid);
     }
 
@@ -164,10 +204,20 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-
-
+        });//seen확인
+        
     }
+
+    public String getTimeDate(long timestamp){
+        try{
+            Date netDate = (new Date(timestamp));
+            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+            return sfd.format(netDate);
+        } catch(Exception e) {
+            return "timestamp";
+        }
+    }
+
 
     private void sendMessage(String sender, final String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -178,6 +228,7 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
         hashMap.put("isseen", false);
+        hashMap.put("timestamp", timestamp);
 
         reference.child("Chats").push().setValue(hashMap); // 데베 'Chats' 에 메세지 push
 
@@ -284,7 +335,7 @@ public class MessageActivity extends AppCompatActivity {
                         mChat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(com.dotter.doctoruntact.MessageActivity.this, mChat, imageurl);
+                    messageAdapter = new MessageAdapter(com.dotter.doctoruntact.MessageActivity.this, mChat, imageurl, timestamp);
                     recyclerView.setAdapter(messageAdapter);
                 }
 
@@ -325,4 +376,6 @@ public class MessageActivity extends AppCompatActivity {
         status("Offline");
         curruntUser("none");
     }
+
+
 }

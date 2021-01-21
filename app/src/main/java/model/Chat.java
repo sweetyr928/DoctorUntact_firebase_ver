@@ -14,7 +14,6 @@ public class Chat {
         this.message = message;
         this.isseen = isseen;
         this.timestamp = timestamp;
-
     }
 
     public Chat() {
@@ -52,11 +51,12 @@ public class Chat {
         this.isseen = isseen;
     }
 
-    public long timestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
+
 }

@@ -11,8 +11,12 @@ import com.bumptech.glide.Glide;
 import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,13 +29,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
     private List<Chat> mChat;
     private String imageurl;
+    private Long timestamp;
     FirebaseUser fuser;
 
 
-    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl){
+    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl, Long timestamp){
         this.mContext = mcontext;
         this.mChat = mChat;
         this.imageurl=imageurl;
+        this.timestamp = timestamp;
     }
 
     @NonNull
@@ -45,6 +51,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             return new ViewHolder(view);
         }
     }
+
+
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
@@ -66,6 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
+
     @Override
     public int getItemCount() {
         return mChat.size();
@@ -76,12 +85,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView show_message;
         public ImageView profile_image;
         public TextView txt_seen;
+        public TextView timestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
+            timestamp = itemView.findViewById(R.id.timestamp);
         }
     }
 
