@@ -57,7 +57,7 @@ public class MessageActivity extends AppCompatActivity {
     EditText text_send;
     MessageAdapter messageAdapter;
     List<Chat> mChat;
-    Long timestamp;
+    String timestamp;
     RecyclerView recyclerView;
 
 
@@ -209,15 +209,15 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     //타임스탬프 변경
-    public String getTimeDate(long timestamp){
-        try{
-            Date netDate = (new Date(timestamp));
-            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-            return sfd.format(netDate);
-        } catch(Exception e) {
-            return "timestamp";
-        }
-    }
+//    public String getTimeDate(long timestamp){
+//        try{
+//            Date netDate = (new Date(timestamp));
+//            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
+//            return sfd.format(netDate);
+//        } catch(Exception e) {
+//            return "timestamp";
+//        }
+//    }
 
 
     private void sendMessage(String sender, final String receiver, String message) {
