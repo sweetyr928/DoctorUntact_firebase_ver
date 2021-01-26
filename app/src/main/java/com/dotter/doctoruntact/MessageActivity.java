@@ -97,7 +97,7 @@ public class MessageActivity extends AppCompatActivity {
 
 
         intent = getIntent();
-        final String userid = intent.getStringExtra("userid");
+        final String userid = intent.getStringExtra("userid"); //userid 받아오기
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);

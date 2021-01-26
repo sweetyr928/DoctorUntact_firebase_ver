@@ -10,6 +10,7 @@ import Adapter.UserAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import model.Board;
 import model.Chatlist;
 import model.User;
@@ -39,21 +40,19 @@ public class BoardFragment extends Fragment{
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.fragment_board, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
+        View rootView = inflater.inflate(R.layout.fragment_board, container, false);
+        recyclerView = rootView.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);// 리사이클러뷰 기존성능 강화
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         list = new ArrayList<>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
-
         database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("Board"); // DB 테이블 연결
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // 파이어베이스 데이터베이스의 데이터를 받아오는 곳
@@ -63,7 +62,8 @@ public class BoardFragment extends Fragment{
                     Board board = snapshot.getValue(Board.class); // 만들어뒀던 User 객체에 데이터를 담는다.
                     list.add(board); // 담은 데이터들을 배열리스트에 넣고 리사이클러뷰로 보낼 준비
                 }
-                adapter.notifyDataSetChanged(); // 리스트 저장 및 새로고침해야 반영이 됨
+                adapter.notifyDataSetChanged();// 리스트 저장 및 새로고침해야 반영이 됨
+
             }
 
             @Override
@@ -72,6 +72,7 @@ public class BoardFragment extends Fragment{
                 Log.e("Fraglike", String.valueOf(databaseError.toException())); // 에러문 출력
             }
         });
+
         adapter = new BoardAdapter(getContext(),list);
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 

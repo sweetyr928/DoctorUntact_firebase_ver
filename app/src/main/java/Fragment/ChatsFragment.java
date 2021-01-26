@@ -25,15 +25,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import model.Chatlist;
 import model.User;
 
 
 public class ChatsFragment extends Fragment {
+
     private List<User> mUsers;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-
 
     FirebaseUser fuser;
     Query reference;

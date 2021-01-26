@@ -5,11 +5,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
 import android.view.View.OnClickListener;
-import com.bumptech.glide.Glide;
+import android.widget.Toast;
+
 import com.dotter.doctoruntact.MessageActivity;
 import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +19,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import model.Board;
-import model.Chat;
+import model.User;
 
 import java.util.ArrayList;
 
@@ -28,6 +27,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
     private Context context;
     private ArrayList<Board> list;
+
 
     //어댑터에서 액티비티 액션을 가져올 때 context가 필요한데 어댑터에는 context가 없다.
     //선택한 액티비티에 대한 context를 가져올 때 필요하다.
@@ -57,6 +57,19 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
         holder.nametext.setText(list.get(position).getName());
         holder.titletext.setText(list.get(position).getTitle());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(context, MessageActivity.class);
+                intent.putExtra("userid",list.get(position).getId());
+                context.startActivity(intent);
+
+            }
+        });
+        //클릭하면 채팅창으로 이동
     }
 
     // 몇개의 데이터를 리스트로 뿌려줘야하는지 반드시 정의해줘야한다
@@ -74,6 +87,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
             super(view);
             nametext = (TextView) view.findViewById(R.id.nametext);
             titletext = (TextView) view.findViewById(R.id.titletext);
+
 
         }
     }
