@@ -124,36 +124,6 @@ public class MessageActivity extends AppCompatActivity {
             }
         }); //메세지 전송
 
-        //타임스탬프
-        /*reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String time = null;
-                Date date = new Date(snapshot.getValue(Long.class));
-                SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss",
-                        Locale.getDefault());
-                String text = sfd.format(date);
-                System.out.println(text);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });*/
-
-       /* reference.addValueEventListener(new ValueEventListener(){
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                long date = dataSnapshot.getValue(Long.class);
-                Log.d(TAG, getTimeDate(date));
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.d(TAG, databaseError.getMessage()); //Don't ignore errors!
-            }
-        });*/
-
 
 
 
@@ -208,16 +178,6 @@ public class MessageActivity extends AppCompatActivity {
         
     }
 
-    //타임스탬프 변경
-//    public String getTimeDate(long timestamp){
-//        try{
-//            Date netDate = (new Date(timestamp));
-//            SimpleDateFormat sfd = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault());
-//            return sfd.format(netDate);
-//        } catch(Exception e) {
-//            return "timestamp";
-//        }
-//    }
 
 
     private void sendMessage(String sender, final String receiver, String message) {
@@ -232,21 +192,6 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("timestamp", ServerValue.TIMESTAMP);
 
         reference.child("Chats").push().setValue(hashMap); // 데베 'Chats' 에 메세지 push
-
-        /*final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
-        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    chatRef.child("id").setValue(userid);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        }); //chatlist에 id set*/
 
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist");
 
