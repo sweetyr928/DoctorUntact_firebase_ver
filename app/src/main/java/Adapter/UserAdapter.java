@@ -25,6 +25,9 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
+
 import model.Chat;
 import model.User;
 
@@ -37,7 +40,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     Long thelasttime;
     String time;
 
-    public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat){
+    public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat ){
         this.mContext = mcontext;
         this.mUsers = mUsers;
         this.ischat = ischat;
@@ -66,6 +69,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }else {
             holder.last_msg.setVisibility(View.GONE);
         }
+
 
         if (ischat){
             if(user.getStatus().equals("Online")){

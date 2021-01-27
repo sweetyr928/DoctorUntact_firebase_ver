@@ -3,6 +3,7 @@ package com.dotter.doctoruntact;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,11 +18,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import Adapter.MessageAdapter;
 import Fragment.APIService;
@@ -43,6 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MessageActivity extends AppCompatActivity {
+    private static final String TAG = "MessageActivity";
     CircleImageView profile_image;
     TextView username;
 
@@ -51,6 +57,7 @@ public class MessageActivity extends AppCompatActivity {
     EditText text_send;
     MessageAdapter messageAdapter;
     List<Chat> mChat;
+    String timestamp;
     RecyclerView recyclerView;
 
 
@@ -124,6 +131,8 @@ public class MessageActivity extends AppCompatActivity {
         });
 
 
+
+
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -142,7 +151,8 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        });//프로필 가져오기
+
         seenMessage(userid);
     }
 
@@ -170,10 +180,11 @@ public class MessageActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
-
-
+        });//seen확인
+        
     }
+
+
 
     private void sendMessage(String sender, final String receiver, String message) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
@@ -184,30 +195,17 @@ public class MessageActivity extends AppCompatActivity {
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
         hashMap.put("isseen", false);
+        hashMap.put("timestamp", ServerValue.TIMESTAMP);
 
         reference.child("Chats").push().setValue(hashMap); // 데베 'Chats' 에 메세지 push
 
-        /*final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid()).child(userid);
-        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.exists()){
-                    chatRef.child("id").setValue(userid);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        }); //chatlist에 id set*/
-
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist");
 
-        chatRef.child(fuser.getUid())
-                .child(userid).child("id").setValue(userid);
-        chatRef.child(userid)
-                .child(fuser.getUid()).child("id").setValue(fuser.getUid());
+        chatRef.child(fuser.getUid()).child(userid).child("id").setValue(userid);
+        chatRef.child(userid).child(fuser.getUid()).child("id").setValue(fuser.getUid());
+        chatRef.child(fuser.getUid()).child(userid).child("timestamp").setValue(ServerValue.TIMESTAMP);
+        chatRef.child(userid).child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
 
         final String msg = message;
 
@@ -272,7 +270,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void readMessages(final String myid, final String userid, final String imageurl) {
+    private void readMessages(final String myid, final String userid, final String imageurl  ) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -290,7 +288,7 @@ public class MessageActivity extends AppCompatActivity {
                         mChat.add(chat);
                     }
 
-                    messageAdapter = new MessageAdapter(com.dotter.doctoruntact.MessageActivity.this, mChat, imageurl);
+                    messageAdapter = new MessageAdapter(com.dotter.doctoruntact.MessageActivity.this, mChat, imageurl, timestamp);
                     recyclerView.setAdapter(messageAdapter);
                 }
 
@@ -302,6 +300,8 @@ public class MessageActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void curruntUser(String userid){
         SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
@@ -331,4 +331,6 @@ public class MessageActivity extends AppCompatActivity {
         status("Offline");
         curruntUser("none");
     }
+
+
 }

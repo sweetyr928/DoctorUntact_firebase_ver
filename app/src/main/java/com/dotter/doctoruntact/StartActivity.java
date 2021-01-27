@@ -22,6 +22,7 @@ import java.util.HashMap;
 import Fragment.ChatsFragment;
 import Fragment.ProfileFragment;
 import Fragment.BoardFragment;
+import Fragment.UsersFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

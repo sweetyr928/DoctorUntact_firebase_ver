@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.content.Context;
+import android.preference.Preference;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,12 @@ import com.bumptech.glide.Glide;
 import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,13 +30,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     private Context mContext;
     private List<Chat> mChat;
     private String imageurl;
+    private String mTimestamp;
     FirebaseUser fuser;
 
 
-    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl){
+    public MessageAdapter(Context mcontext, List<Chat> mChat, String imageurl, String mTimestamp){
         this.mContext = mcontext;
         this.mChat = mChat;
         this.imageurl=imageurl;
+        this.mTimestamp = mTimestamp;
     }
 
     @NonNull
@@ -46,10 +53,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
+
+//"yyyy-MM-dd HH:mm"
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Chat chat = mChat.get(position);
         holder.show_message.setText(chat.getMessage());
+        Date date = new Date(chat.getTimestamp());
+        SimpleDateFormat sdt = new SimpleDateFormat("HH:mm");
+        mTimestamp = sdt.format(date);
+        holder.mTimestamp.setText(mTimestamp);
+        //holder.mTimestamp.setText(String.valueOf(chat.getTimestamp()));
         if (imageurl.equals("default")) {
             holder.profile_image.setImageResource(R.drawable.prof);
         } else {
@@ -66,6 +80,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
     }
 
+
+
+
     @Override
     public int getItemCount() {
         return mChat.size();
@@ -76,12 +93,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         public TextView show_message;
         public ImageView profile_image;
         public TextView txt_seen;
+        public TextView mTimestamp;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.show_message);
             profile_image = itemView.findViewById(R.id.profile_image);
             txt_seen = itemView.findViewById(R.id.txt_seen);
+            mTimestamp = itemView.findViewById(R.id.timestamp);
         }
     }
 
