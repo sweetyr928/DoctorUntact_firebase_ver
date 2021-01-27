@@ -61,6 +61,7 @@ public class ChatsFragment extends Fragment {
                 usersList.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
                         Chatlist chatlist = snapshot.getValue(Chatlist.class);
                         System.out.println(chatlist);
 
