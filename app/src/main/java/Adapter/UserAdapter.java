@@ -141,6 +141,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                         last_msg.setText(thelastmessage);
                         break;
                 }
+                thelastmessage = "default";
+
                 if (thelasttime == 0L) {
                     last_time.setText("No Data");
                 }else {
@@ -149,7 +151,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     time = sdt.format(date);
                     last_time.setText(time);
                 }
-                thelastmessage = "default";
+
             }
 
             @Override
