@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -54,7 +53,7 @@
         android:src="@mipmap/ic_launcher"
         android:visibility="gone"
         app:civ_border_color="#C3BABA"
-        app:civ_border_width="10dp" />
+        app:civ_border_width="10dp"></de.hdodenhof.circleimageview.CircleImageView>
 
     <TextView
         android:id="@+id/last_msg"
@@ -79,6 +78,5 @@
         android:maxLines="1"
         android:paddingTop="5dp"
         android:textColor="#40E413"></TextView>
-
 
 </RelativeLayout>
