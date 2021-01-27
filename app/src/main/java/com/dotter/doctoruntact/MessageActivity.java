@@ -98,10 +98,16 @@ public class MessageActivity extends AppCompatActivity {
 
         intent = getIntent();
         final String userid = intent.getStringExtra("userid"); //userid 받아오기
+        final String name = intent.getStringExtra("name");
+        final String title = intent.getStringExtra("title");
+        String msg_first = "이름: " +name+ "\n"+ "제목: "+title;
+        //Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, msg_first, Toast.LENGTH_SHORT).show();
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
+        sendMessage(userid, fuser.getUid(), msg_first); // 클릭하면 게시자/제목 게시판 작성자가 보낸 것처럼 보이게 -> 환자앱에선 삭제해야함
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,8 +120,8 @@ public class MessageActivity extends AppCompatActivity {
                     Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, "You Can't Send Empty Message", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
-            }
-        }); //메세지 전송
+            }//메세지 전송
+        });
 
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -256,7 +262,7 @@ public class MessageActivity extends AppCompatActivity {
                     });
 
                 }
-            }
+            } // 새로운 메세지에 대한 noti
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

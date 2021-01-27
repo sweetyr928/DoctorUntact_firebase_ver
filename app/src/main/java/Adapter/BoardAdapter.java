@@ -64,7 +64,9 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, MessageActivity.class);
-                intent.putExtra("userid",list.get(position).getId());
+                intent.putExtra("userid",list.get(position).getId()); // 작성자 id 넘겨주기
+                intent.putExtra("name",list.get(position).getName());
+                intent.putExtra("title",list.get(position).getTitle());
                 context.startActivity(intent);
 
             }

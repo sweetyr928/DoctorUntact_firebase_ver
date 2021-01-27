@@ -104,7 +104,7 @@ public class StartActivity extends AppCompatActivity {
 
                 }
 
-                viewPagerAdpter.addaFragment(new ProfileFragment(),"Profile");
+                viewPagerAdpter.addaFragment(new ProfileFragment(),"MyPage");
 
                 // 탭
 

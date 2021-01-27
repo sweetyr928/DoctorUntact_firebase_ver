@@ -31,7 +31,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
     private boolean ischat;
-    String thealastmessage;
+    String thelastmessage;
 
     public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat){
         this.mContext = mcontext;
@@ -111,7 +111,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     private void lastMessage(final String userid , final TextView last_msg){
-        thealastmessage = "default";
+        thelastmessage = "default";
         final FirebaseUser firebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -121,19 +121,19 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     Chat chat = snapshot.getValue(Chat.class);
                     if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) || chat.getReceiver().equals(userid) &&
                             chat.getSender().equals(firebaseUser.getUid())){
-                        thealastmessage = chat.getMessage();
+                        thelastmessage = chat.getMessage();
                     }
                 }
-                switch (thealastmessage){
+                switch (thelastmessage){
                     case "default" :
-                        last_msg.setText("No Message");
+                        last_msg.setText("");
                         break;
 
                     default:
-                        last_msg.setText(thealastmessage);
+                        last_msg.setText(thelastmessage);
                         break;
                 }
-                thealastmessage = "default";
+                thelastmessage = "default";
             }
 
             @Override
