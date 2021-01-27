@@ -3,6 +3,5 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/DoctorUntact" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/quickstart-android" vcs="Git" />
   </component>
 </project>
