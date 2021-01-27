@@ -36,8 +36,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private Context mContext;
     private List<User> mUsers;
     private boolean ischat;
-    String thealastmessage;
-    Long thealasttime;
+    String thelastmessage;
+    Long thelasttime;
     String time;
 
     public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat ){
@@ -121,8 +121,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
     private void lastMessage(final String userid , final TextView last_msg, final TextView last_time){
-        thealastmessage = "default";
-        thealasttime = 0L;
+        thelastmessage = "default";
+        thelasttime = 0L;
 
         final FirebaseUser firebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -133,23 +133,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     Chat chat = snapshot.getValue(Chat.class);
                     if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) || chat.getReceiver().equals(userid) &&
                             chat.getSender().equals(firebaseUser.getUid())){
-                        thealastmessage = chat.getMessage();
-                        thealasttime = chat.getTimestamp();
+                        thelastmessage = chat.getMessage();
+                        thelasttime = chat.getTimestamp();
                     }
                 }
-                switch (thealastmessage){
+                switch (thelastmessage){
                     case "default" :
                         last_msg.setText("No Message");
                         break;
 
                     default:
-                        last_msg.setText(thealastmessage);
+                        last_msg.setText(thelastmessage);
                         break;
                 }
-                if (thealasttime == 0L) {
+                if (thelasttime == 0L) {
                     last_time.setText("No Data");
                 }else {
-                    Date date = new Date(thealasttime);
+                    Date date = new Date(thelasttime);
                     SimpleDateFormat sdt = new SimpleDateFormat("MM-dd HH:mm");
                     time = sdt.format(date);
                     last_time.setText(time);

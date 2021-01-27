@@ -26,7 +26,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import model.Chat;
 import model.Chatlist;
 import model.User;
 
@@ -35,6 +34,7 @@ public class ChatsFragment extends Fragment {
     private List<User> mUsers;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
+    private Chatlist timestamp;
 
 
     FirebaseUser fuser;
@@ -62,12 +62,14 @@ public class ChatsFragment extends Fragment {
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                        System.out.println(chatlist);
 
                         usersList.add(0, chatlist);
                     }
 
-// 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
                 chatlist();
+// 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
+
             }
 
             @Override
@@ -119,6 +121,7 @@ public class ChatsFragment extends Fragment {
 
 }
 
-
+//채팅방에 타임스탬프추가  새로추가하고 채팅할때마다 채팅방 타임스탬프 다시 저장해야함
+//마지막채팅 불러오기     불러오는법 알아야함
 
 

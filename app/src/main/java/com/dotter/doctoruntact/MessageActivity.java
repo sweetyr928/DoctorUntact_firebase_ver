@@ -195,10 +195,11 @@ public class MessageActivity extends AppCompatActivity {
 
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist");
 
-        chatRef.child(fuser.getUid())
-                .child(userid).child("id").setValue(userid);
-        chatRef.child(userid)
-                .child(fuser.getUid()).child("id").setValue(fuser.getUid());
+        chatRef.child(fuser.getUid()).child(userid).child("id").setValue(userid);
+        chatRef.child(userid).child(fuser.getUid()).child("id").setValue(fuser.getUid());
+        chatRef.child(fuser.getUid()).child(userid).child("timestamp").setValue(ServerValue.TIMESTAMP);
+        chatRef.child(userid).child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
 
         final String msg = message;
 

@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 import Fragment.ChatsFragment;
 import Fragment.ProfileFragment;
-//import Fragment.BoardFragment;
+import Fragment.BoardFragment;
 import Fragment.UsersFragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -94,6 +94,7 @@ public class StartActivity extends AppCompatActivity {
                         unread++;
                     } // 데이터베이스에서 chat 읽기
                 }
+                viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
                 if (unread == 0){
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"Chats");
 
@@ -101,8 +102,8 @@ public class StartActivity extends AppCompatActivity {
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"("+unread+") Chats");
 
                 }
-                //viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
-                viewPagerAdpter.addaFragment(new UsersFragment(),"Users");
+
+                //viewPagerAdpter.addaFragment(new UsersFragment(),"Users");
                 viewPagerAdpter.addaFragment(new ProfileFragment(),"Profile");
 
                 // 탭
