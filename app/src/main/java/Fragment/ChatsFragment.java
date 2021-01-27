@@ -25,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import model.Chat;
 import model.Chatlist;
 import model.User;
 
@@ -57,11 +59,14 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
 
-                    usersList.add(0,chatlist);
-                }
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Chatlist chatlist = snapshot.getValue(Chatlist.class);
+
+                        usersList.add(0, chatlist);
+                    }
+
+// 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
                 chatlist();
             }
 

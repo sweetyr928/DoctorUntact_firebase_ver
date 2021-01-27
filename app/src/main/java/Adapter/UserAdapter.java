@@ -40,7 +40,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     Long thealasttime;
     String time;
 
-    public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat){
+    public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat ){
         this.mContext = mcontext;
         this.mUsers = mUsers;
         this.ischat = ischat;
@@ -65,11 +65,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         if (ischat){
-            lastMessage(user.getId(),holder.last_msg,holder.last_time);
+            lastMessage(user.getId(),holder.last_msg, holder.last_time);
         }else {
             holder.last_msg.setVisibility(View.GONE);
         }
-
 
 
         if (ischat){
