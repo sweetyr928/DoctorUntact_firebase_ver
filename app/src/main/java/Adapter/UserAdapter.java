@@ -123,7 +123,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private void lastMessage(final String userid , final TextView last_msg, final TextView last_time){
         thelastmessage = "default";
         thelasttime = 0L;
-
         final FirebaseUser firebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -158,7 +157,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                thelastmessage = "default";
             }
         });
 
