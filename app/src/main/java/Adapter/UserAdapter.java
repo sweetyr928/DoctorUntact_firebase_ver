@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> mUsers;
     private boolean ischat;
     String thelastmessage;
+    Long thelasttime;
+    String time;
 
     public UserAdapter(Context mcontext, List<User> mUsers, boolean ischat){
         this.mContext = mcontext;
@@ -58,7 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
 
         if (ischat){
-            lastMessage(user.getId(),holder.last_msg);
+            lastMessage(user.getId(),holder.last_msg, holder.last_time);
         }else {
             holder.last_msg.setVisibility(View.GONE);
         }
@@ -98,6 +102,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         private ImageView img_on;
         private ImageView img_off;
         private TextView last_msg;
+        private TextView last_time;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -107,11 +112,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             img_on = itemView.findViewById(R.id.img_on);
             img_off = itemView.findViewById(R.id.img_off);
             last_msg=itemView.findViewById(R.id.last_msg);
+            last_time = itemView.findViewById(R.id.last_time);
         }
     }
 
-    private void lastMessage(final String userid , final TextView last_msg){
+    private void lastMessage(final String userid , final TextView last_msg, final TextView last_time){
         thelastmessage = "default";
+        thelasttime = 0L;
         final FirebaseUser firebaseUser  = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
@@ -122,6 +129,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     if (chat.getReceiver().equals(firebaseUser.getUid()) && chat.getSender().equals(userid) || chat.getReceiver().equals(userid) &&
                             chat.getSender().equals(firebaseUser.getUid())){
                         thelastmessage = chat.getMessage();
+                        thelasttime = chat.getTimestamp();
                     }
                 }
                 switch (thelastmessage){
@@ -132,6 +140,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
                     default:
                         last_msg.setText(thelastmessage);
                         break;
+                }
+                if (thelasttime == 0L) {
+                    last_time.setText("No Data");
+                }else {
+                    Date date = new Date(thelasttime);
+                    SimpleDateFormat sdt = new SimpleDateFormat("MM-dd HH:mm");
+                    time = sdt.format(date);
+                    last_time.setText(time);
                 }
                 thelastmessage = "default";
             }

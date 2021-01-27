@@ -67,4 +67,18 @@
         android:maxLines="1"
         android:paddingTop="5dp"
         android:textColor="#40E413"></TextView>
+
+    <TextView
+        android:id="@+id/last_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_toEndOf="@+id/username"
+        android:layout_toRightOf="@+id/username"
+        android:maxLines="1"
+        android:paddingTop="5dp"
+        android:textColor="#40E413"></TextView>
+
+
 </RelativeLayout>

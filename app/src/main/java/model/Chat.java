@@ -52,7 +52,7 @@ public class Chat {
         this.isseen = isseen;
     }
 
-    public long timestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
