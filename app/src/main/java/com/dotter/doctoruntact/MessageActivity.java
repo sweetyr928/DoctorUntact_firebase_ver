@@ -107,6 +107,7 @@ public class MessageActivity extends AppCompatActivity {
         final String userid = intent.getStringExtra("userid"); //userid 받아오기
         final String name = intent.getStringExtra("name");
         final String title = intent.getStringExtra("title");
+        String firsttime = intent.getStringExtra("firsttime");
         String msg_first = "이름: " +name+ "\n"+ "제목: "+title;
         //Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, msg_first, Toast.LENGTH_SHORT).show();
 
@@ -114,7 +115,12 @@ public class MessageActivity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference("Users").child(userid);
 
-        sendMessage(userid, fuser.getUid(), msg_first); // 클릭하면 게시자/제목 게시판 작성자가 보낸 것처럼 보이게 -> 환자앱에선 삭제해야함
+        if (firsttime=="1"){
+
+            sendMessage(userid, fuser.getUid(), msg_first);
+            firsttime="0";
+
+        }// 클릭하면 게시자/제목 게시판 작성자가 보낸 것처럼 보이게 -> 환자앱에선 삭제해야함
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
