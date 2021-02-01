@@ -4,6 +4,8 @@ public class Chatlist {
     String id;
     Long timestamp;
 
+    public Chatlist(){}
+
     public Chatlist(String id) {
         this.id=id;
     }
