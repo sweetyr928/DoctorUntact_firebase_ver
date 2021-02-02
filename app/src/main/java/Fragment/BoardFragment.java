@@ -34,7 +34,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 public class BoardFragment extends Fragment{
 
     private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
+    //private RecyclerView.LayoutManager layoutManager;
     private BoardAdapter adapter;
     private ArrayList<Board> list;
     private FirebaseDatabase database;
@@ -47,8 +47,10 @@ public class BoardFragment extends Fragment{
         View rootView = inflater.inflate(R.layout.fragment_board, container, false);
         recyclerView = rootView.findViewById(R.id.recyclerview);
         recyclerView.setHasFixedSize(true);// 리사이클러뷰 기존성능 강화
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        /*layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);*/
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(manager);
         list = new ArrayList<>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
         database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("Board"); // DB 테이블 연결

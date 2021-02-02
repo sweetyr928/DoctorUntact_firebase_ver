@@ -57,7 +57,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
         holder.nametext.setText(list.get(position).getName());
         holder.titletext.setText(list.get(position).getTitle());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override

@@ -82,6 +82,7 @@ public class StartActivity extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         final ViewPager viewPager = findViewById(R.id.view_pager); // activity_start.xml 에 있음
 
+
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,8 +96,6 @@ public class StartActivity extends AppCompatActivity {
                     } // 데이터베이스에서 chat 읽기
                 }
 
-                viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
-
                 if (unread == 0){
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"Chats");
 
@@ -104,6 +103,8 @@ public class StartActivity extends AppCompatActivity {
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"("+unread+") Chats");
 
                 }
+
+                viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
 
                 viewPagerAdpter.addaFragment(new ProfileFragment(),"MyPage");
 
