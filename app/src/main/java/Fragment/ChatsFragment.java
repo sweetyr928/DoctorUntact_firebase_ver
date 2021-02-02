@@ -1,6 +1,5 @@
 package Fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,13 +18,15 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import Adapter.UserAdapter;
 import Notification.Token;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,11 +41,9 @@ public class ChatsFragment extends Fragment {
     private List<User> mUsers;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private Chatlist timestamp;
 
     FirebaseUser fuser;
     Query reference;
-    Query query;
 
     private List<Chatlist> usersList;
 
@@ -67,16 +66,21 @@ public class ChatsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        //for (int i = 0; i > usersList.size()+1; i++ ) {
-                            Chatlist chatlist = snapshot.getValue(Chatlist.class);
-//                            chatlist.getTimestamp();
-
-                            System.out.println(usersList.size());
-                            usersList.add(0, chatlist);
-                        //}
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    String ts = String.valueOf(chatlist.getTimestamp());
+                    if (chatlist == null) {
+                        usersList.add(0, chatlist);
+                    } else {
+                        usersList.add(0, chatlist);
+                        Collections.sort(usersList);
                     }
-                        chatlist();
+                    //usersList.add(0, chatlist);
+                    System.out.println(usersList);
+                    //for (int i = 0; i > usersList.size()+1; i++ ) {
+                    //}
+                }
+                chatlist();
 // 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
             }
 
@@ -91,9 +95,9 @@ public class ChatsFragment extends Fragment {
         return view;
     }
 
-    private void updateToken(String token){
+    private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1=new Token(token);
+        Token token1 = new Token(token);
         reference.child(fuser.getUid()).setValue(token1);
 
 
@@ -107,15 +111,17 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    for (Chatlist chatlist :usersList){
-                        if (user.getId().equals(chatlist.getId())){
+                    Chatlist chat = snapshot.getValue(Chatlist.class);
+                    for (Chatlist chatlist : usersList) {
+                        if (user.getId().equals(chatlist.getId())) {
                             mUsers.add(user);
                         }
                     }
                 }
-                userAdapter = new UserAdapter(getContext(),mUsers,true);
+
+                userAdapter = new UserAdapter(getContext(), mUsers, true);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -127,8 +133,14 @@ public class ChatsFragment extends Fragment {
     }
 
 
+   private final static Comparator<User> sort = new Comparator<User>() {
+       @Override
+       public int compare(User user, User t1) {
+           return Long.compare(user.getTimestamp(),t1.getTimestamp());
+       }
+   };
+
 }
 
-//마지막채팅 불러오기      불러오는법 알아야함
 
 

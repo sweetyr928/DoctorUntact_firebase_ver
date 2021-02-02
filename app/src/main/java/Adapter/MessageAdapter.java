@@ -63,7 +63,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         SimpleDateFormat sdt = new SimpleDateFormat("HH:mm");
         mTimestamp = sdt.format(date);
         holder.mTimestamp.setText(mTimestamp);
-        //holder.mTimestamp.setText(String.valueOf(chat.getTimestamp()));
         if (imageurl.equals("default")) {
             holder.profile_image.setImageResource(R.drawable.prof);
         } else {

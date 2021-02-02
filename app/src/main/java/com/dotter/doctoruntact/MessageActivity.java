@@ -21,6 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 
+import java.sql.Ref;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -205,6 +206,12 @@ public class MessageActivity extends AppCompatActivity {
         chatRef.child(userid).child(fuser.getUid()).child("id").setValue(fuser.getUid());
         chatRef.child(fuser.getUid()).child(userid).child("timestamp").setValue(ServerValue.TIMESTAMP);
         chatRef.child(userid).child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
+
+        userRef.child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
+
+
 
 
         final String msg = message;
