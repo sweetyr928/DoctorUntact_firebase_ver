@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,15 +18,19 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import Adapter.UserAdapter;
 import Notification.Token;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import model.Chat;
 import model.Chatlist;
 import model.User;
 
@@ -39,6 +44,7 @@ public class ChatsFragment extends Fragment {
 
     FirebaseUser fuser;
     Query reference;
+    Query query;
 
     private List<Chatlist> usersList;
 
@@ -54,6 +60,7 @@ public class ChatsFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         usersList = new ArrayList<>();
 
+        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference("chatlist").child(fuser.getUid());
         reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -61,16 +68,16 @@ public class ChatsFragment extends Fragment {
                 usersList.clear();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        //for (int i = 0; i > usersList.size()+1; i++ ) {
+                            Chatlist chatlist = snapshot.getValue(Chatlist.class);
+//                            chatlist.getTimestamp();
 
-                        Chatlist chatlist = snapshot.getValue(Chatlist.class);
-                        System.out.println(chatlist);
-
-                        usersList.add(0, chatlist);
+                            System.out.println(usersList.size());
+                            usersList.add(0, chatlist);
+                        //}
                     }
-
-                chatlist();
+                        chatlist();
 // 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
-
             }
 
             @Override
@@ -122,7 +129,6 @@ public class ChatsFragment extends Fragment {
 
 }
 
-//채팅방에 타임스탬프추가  새로추가하고 채팅할때마다 채팅방 타임스탬프 다시 저장해야함
-//마지막채팅 불러오기     불러오는법 알아야함
+//마지막채팅 불러오기      불러오는법 알아야함
 
 
