@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,6 @@ import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +27,7 @@ import Adapter.UserAdapter;
 import Notification.Token;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,7 +44,8 @@ public class ChatsFragment extends Fragment {
     private UserAdapter userAdapter;
 
     FirebaseUser fuser;
-    Query reference;
+    DatabaseReference reference;
+
 
     private List<Chatlist> usersList;
 
@@ -59,41 +61,38 @@ public class ChatsFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         usersList = new ArrayList<>();
 
-        //DatabaseReference ref = FirebaseDatabase.getInstance().getReference("chatlist").child(fuser.getUid());
         reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
-
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Chatlist chatlist = snapshot.getValue(Chatlist.class);
-                    String ts = String.valueOf(chatlist.getTimestamp());
-                    if (chatlist == null) {
-                        usersList.add(0, chatlist);
-                    } else {
-                        usersList.add(0, chatlist);
-                        Collections.sort(usersList);
-                    }
-                    //usersList.add(0, chatlist);
+                    usersList.add(0, chatlist);
+
                     System.out.println(usersList);
-                    //for (int i = 0; i > usersList.size()+1; i++ ) {
-                    //}
+
                 }
-                chatlist();
+
+
+
+            chatlist();
+
 // 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
-            }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        @Override
+        public void onCancelled (@NonNull DatabaseError databaseError){
 
-            }
-        });
+        }
+    });
 
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+    updateToken(FirebaseInstanceId.getInstance().
+
+    getToken());
 
         return view;
-    }
+}
 
     private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
@@ -107,16 +106,15 @@ public class ChatsFragment extends Fragment {
 
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    Chatlist chat = snapshot.getValue(Chatlist.class);
                     for (Chatlist chatlist : usersList) {
                         if (user.getId().equals(chatlist.getId())) {
-                            mUsers.add(user);
+                            mUsers.add(0, user);
                         }
                     }
                 }
@@ -132,13 +130,6 @@ public class ChatsFragment extends Fragment {
         });
     }
 
-
-   private final static Comparator<User> sort = new Comparator<User>() {
-       @Override
-       public int compare(User user, User t1) {
-           return Long.compare(user.getTimestamp(),t1.getTimestamp());
-       }
-   };
 
 }
 

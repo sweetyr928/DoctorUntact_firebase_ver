@@ -36,11 +36,13 @@ import Notification.Data;
 import Notification.MyResponse;
 import Notification.Sender;
 import Notification.Token;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import model.Chat;
 import model.User;
@@ -108,7 +110,7 @@ public class MessageActivity extends AppCompatActivity {
         final String userid = intent.getStringExtra("userid"); //userid 받아오기
         final String name = intent.getStringExtra("name");
         final String title = intent.getStringExtra("title");
-        String msg_first = "이름: " +name+ "\n"+ "제목: "+title;
+        String msg_first = "이름: " + name + "\n" + "제목: " + title;
         //Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, msg_first, Toast.LENGTH_SHORT).show();
 
         fuser = FirebaseAuth.getInstance().getCurrentUser();
@@ -130,8 +132,6 @@ public class MessageActivity extends AppCompatActivity {
                 text_send.setText("");
             }//메세지 전송
         });
-
-
 
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -157,7 +157,7 @@ public class MessageActivity extends AppCompatActivity {
         seenMessage(userid);
     }
 
-    private void seenMessage(final String userid){
+    private void seenMessage(final String userid) {
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         seenListner = reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -167,13 +167,13 @@ public class MessageActivity extends AppCompatActivity {
                     Chat chat;
                     chat = snapshot.getValue(Chat.class);
 
-                   if (chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)){
+                    if (chat.getReceiver().equals(fuser.getUid()) && chat.getSender().equals(userid)) {
 
-                       HashMap<String, Object> hashMap = new HashMap<>();
-                       hashMap.put("isseen", true);
-                       snapshot.getRef().updateChildren(hashMap);
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("isseen", true);
+                        snapshot.getRef().updateChildren(hashMap);
 
-                   }
+                    }
                 }
             }
 
@@ -182,9 +182,8 @@ public class MessageActivity extends AppCompatActivity {
 
             }
         });//seen확인
-        
-    }
 
+    }
 
 
     private void sendMessage(String sender, final String receiver, String message) {
@@ -204,19 +203,16 @@ public class MessageActivity extends AppCompatActivity {
 
         chatRef.child(fuser.getUid()).child(userid).child("id").setValue(userid);
         chatRef.child(userid).child(fuser.getUid()).child("id").setValue(fuser.getUid());
-        chatRef.child(fuser.getUid()).child(userid).child("timestamp").setValue(ServerValue.TIMESTAMP);
-        chatRef.child(userid).child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
 
         userRef.child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
-
-
+        //userRef.child(userid).equals(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
 
         final String msg = message;
 
-        reference=FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -224,7 +220,7 @@ public class MessageActivity extends AppCompatActivity {
                 if (notify) {
                     sendNotification(receiver, user.getUsername(), msg);
                 }
-                notify=false;
+                notify = false;
             }
 
             @Override
@@ -244,17 +240,17 @@ public class MessageActivity extends AppCompatActivity {
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot :dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Token token = snapshot.getValue(Token.class);
-                    Data data = new Data(fuser.getUid(),R.mipmap.ic_launcher,username+": "+message,"New Messsage",userid);
+                    Data data = new Data(fuser.getUid(), R.mipmap.ic_launcher, username + ": " + message, "New Messsage", userid);
 
-                    Sender sender = new Sender(data,token.getToken());
+                    Sender sender = new Sender(data, token.getToken());
                     apiService.sendNotification(sender).enqueue(new Callback<MyResponse>() {
                         @Override
                         public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                            if (response.code()==200){
-                                if (response.body().success != 1){
-                                    Toast.makeText(com.dotter.doctoruntact.MessageActivity.this,"Failed", Toast.LENGTH_SHORT).show();
+                            if (response.code() == 200) {
+                                if (response.body().success != 1) {
+                                    Toast.makeText(com.dotter.doctoruntact.MessageActivity.this, "Failed", Toast.LENGTH_SHORT).show();
 
                                 }
                             }
@@ -277,7 +273,7 @@ public class MessageActivity extends AppCompatActivity {
 
     }
 
-    private void readMessages(final String myid, final String userid, final String imageurl  ) {
+    private void readMessages(final String myid, final String userid, final String imageurl) {
         mChat = new ArrayList<>();
 
         reference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -309,17 +305,17 @@ public class MessageActivity extends AppCompatActivity {
     }
 
 
-
-    private void curruntUser(String userid){
-        SharedPreferences.Editor editor = getSharedPreferences("PREFS",MODE_PRIVATE).edit();
-        editor.putString("curruntuser",userid);
+    private void curruntUser(String userid) {
+        SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+        editor.putString("curruntuser", userid);
         editor.apply();
 
     }
-    public void  status(String status){
+
+    public void status(String status) {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser.getUid());
         HashMap<String, Object> hashmap = new HashMap<>();
-        hashmap.put("status",status);
+        hashmap.put("status", status);
         reference.updateChildren(hashmap);
     }
 
