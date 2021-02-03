@@ -21,6 +21,7 @@ import java.util.List;
 
 import Adapter.UserAdapter;
 import Notification.Token;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,24 +68,23 @@ public class ChatsFragment extends Fragment {
                 }
 
 
-
-            chatlist();
+                chatlist();
 
 // 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
-        }
+            }
 
-        @Override
-        public void onCancelled (@NonNull DatabaseError databaseError){
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        }
-    });
+            }
+        });
 
-    updateToken(FirebaseInstanceId.getInstance().
+        updateToken(FirebaseInstanceId.getInstance().
 
-    getToken());
+                getToken());
 
         return view;
-}
+    }
 
     private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
