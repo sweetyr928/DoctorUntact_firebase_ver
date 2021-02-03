@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.dotter.doctoruntact.MessageActivity;
+import com.dotter.doctoruntact.PopupActivity;
 import com.dotter.doctoruntact.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,7 +64,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, MessageActivity.class);
+                Intent intent = new Intent(context, PopupActivity.class);
                 intent.putExtra("userid",list.get(position).getId()); // 작성자 id 넘겨주기
                 intent.putExtra("name",list.get(position).getName());
                 intent.putExtra("title",list.get(position).getTitle());
