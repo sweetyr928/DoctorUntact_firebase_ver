@@ -207,7 +207,7 @@ public class MessageActivity extends AppCompatActivity {
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users");
 
         userRef.child(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
-        //userRef.child(userid).equals(fuser.getUid()).child("timestamp").setValue(ServerValue.TIMESTAMP);
+        userRef.child(userid).child("timestamp").setValue(ServerValue.TIMESTAMP);
 
 
         final String msg = message;
