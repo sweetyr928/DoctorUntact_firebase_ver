@@ -82,7 +82,6 @@ public class StartActivity extends AppCompatActivity {
         final TabLayout tabLayout = findViewById(R.id.tab_layout);
         final ViewPager viewPager = findViewById(R.id.view_pager); // activity_start.xml 에 있음
 
-
         reference = FirebaseDatabase.getInstance().getReference("Chats");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,6 +94,7 @@ public class StartActivity extends AppCompatActivity {
                         unread++;
                     } // 데이터베이스에서 chat 읽기
                 }
+
 
                 if (unread == 0){
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"Chats");

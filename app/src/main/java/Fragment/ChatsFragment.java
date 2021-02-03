@@ -21,6 +21,7 @@ import java.util.List;
 
 import Adapter.UserAdapter;
 import Notification.Token;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,6 @@ public class ChatsFragment extends Fragment {
     private List<User> mUsers;
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
-    private Chatlist timestamp;
 
     FirebaseUser fuser;
     Query reference;
@@ -59,19 +59,18 @@ public class ChatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 usersList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Chatlist chatlist = snapshot.getValue(Chatlist.class);
+                    usersList.add(0, chatlist);
 
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    System.out.println(usersList);
 
-                        Chatlist chatlist = snapshot.getValue(Chatlist.class);
-                        System.out.println(chatlist.getTimestamp());
+                }
 
-
-                        usersList.add(0, chatlist);
-                    }
 
                 chatlist();
-// 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
 
+// 마지막에 있던 날짜를 불러와서 내림차순으로 정렬한다
             }
 
             @Override
@@ -80,14 +79,16 @@ public class ChatsFragment extends Fragment {
             }
         });
 
-        updateToken(FirebaseInstanceId.getInstance().getToken());
+        updateToken(FirebaseInstanceId.getInstance().
+
+                getToken());
 
         return view;
     }
 
-    private void updateToken(String token){
+    private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
-        Token token1=new Token(token);
+        Token token1 = new Token(token);
         reference.child(fuser.getUid()).setValue(token1);
 
 
@@ -97,19 +98,20 @@ public class ChatsFragment extends Fragment {
 
         mUsers = new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Users");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.orderByChild("timestamp").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 mUsers.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
-                    for (Chatlist chatlist :usersList){
-                        if (user.getId().equals(chatlist.getId())){
-                            mUsers.add(user);
+                    for (Chatlist chatlist : usersList) {
+                        if (user.getId().equals(chatlist.getId())) {
+                            mUsers.add(0, user);
                         }
                     }
                 }
-                userAdapter = new UserAdapter(getContext(),mUsers,true);
+
+                userAdapter = new UserAdapter(getContext(), mUsers, true);
                 recyclerView.setAdapter(userAdapter);
             }
 
@@ -123,7 +125,5 @@ public class ChatsFragment extends Fragment {
 
 }
 
-//채팅방에 타임스탬프추가  새로추가하고 채팅할때마다 채팅방 타임스탬프 다시 저장해야함
-//마지막채팅 불러오기     불러오는법 알아야함
 
 
