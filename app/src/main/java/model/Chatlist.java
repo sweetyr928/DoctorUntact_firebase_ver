@@ -6,6 +6,8 @@ public class Chatlist {
     public Chatlist() {
     }
 
+    public Chatlist(){}
+
     public Chatlist(String id) {
         this.id = id;
     }

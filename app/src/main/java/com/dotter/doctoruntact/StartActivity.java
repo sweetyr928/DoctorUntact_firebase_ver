@@ -95,6 +95,7 @@ public class StartActivity extends AppCompatActivity {
                     } // 데이터베이스에서 chat 읽기
                 }
 
+                viewPagerAdpter.addaFragment(new BoardFragment(),"Board");
 
                 if (unread == 0){
                     viewPagerAdpter.addaFragment(new ChatsFragment(),"Chats");

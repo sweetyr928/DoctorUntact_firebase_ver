@@ -1,6 +1,5 @@
 package Fragment;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,21 +17,15 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import Adapter.UserAdapter;
 import Notification.Token;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import model.Chat;
 import model.Chatlist;
 import model.User;
 
@@ -44,8 +37,7 @@ public class ChatsFragment extends Fragment {
     private UserAdapter userAdapter;
 
     FirebaseUser fuser;
-    DatabaseReference reference;
-
+    Query reference;
 
     private List<Chatlist> usersList;
 

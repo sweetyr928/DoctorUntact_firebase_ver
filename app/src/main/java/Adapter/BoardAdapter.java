@@ -57,7 +57,6 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
         holder.nametext.setText(list.get(position).getName());
         holder.titletext.setText(list.get(position).getTitle());
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -67,6 +66,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
                 intent.putExtra("userid",list.get(position).getId()); // 작성자 id 넘겨주기
                 intent.putExtra("name",list.get(position).getName());
                 intent.putExtra("title",list.get(position).getTitle());
+                intent.putExtra("firsttime","1");
                 context.startActivity(intent);
 
             }
