@@ -6,14 +6,16 @@ public class User {
     private String imageURL;
     private String status;
     private String search;
+    private Long timestamp;
 
-    public User(String id, String username, String imageURL, String status, String search) {
+    public User(String id, String username, String imageURL, String status, String search, Long timestamp) {
 
         this.id = id;
         this.username = username;
         this.imageURL = imageURL;
         this.status = status;
         this.search = search;
+        this.timestamp = timestamp;
 
     }
 
@@ -58,5 +60,13 @@ public class User {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -126,7 +126,3 @@ public class ChatsFragment extends Fragment {
 }
 
 
-//채팅방에 타임스탬프추가  새로추가하고 채팅할때마다 채팅방 타임스탬프 다시 저장해야함
-//마지막채팅 불러오기     불러오는법 알아야함
-
-

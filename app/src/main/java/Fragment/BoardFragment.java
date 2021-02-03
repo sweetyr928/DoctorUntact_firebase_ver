@@ -5,17 +5,22 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import Adapter.BoardAdapter;
 import Adapter.UserAdapter;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import model.Board;
 import model.Chatlist;
 import model.User;
+
 import com.dotter.doctoruntact.R;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,7 +37,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 
-public class BoardFragment extends Fragment{
+public class BoardFragment extends Fragment {
 
     private RecyclerView recyclerView;
     //private RecyclerView.LayoutManager layoutManager;
@@ -50,7 +55,7 @@ public class BoardFragment extends Fragment{
         recyclerView.setHasFixedSize(true);// 리사이클러뷰 기존성능 강화
         /*layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);*/
-        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
 
         LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
@@ -80,7 +85,7 @@ public class BoardFragment extends Fragment{
             }
         });
 
-        adapter = new BoardAdapter(getContext(),list);
+        adapter = new BoardAdapter(getContext(), list);
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 
         return rootView;
