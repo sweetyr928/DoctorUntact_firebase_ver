@@ -10,6 +10,7 @@ import Adapter.UserAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import model.Board;
 import model.Chatlist;
@@ -51,6 +52,10 @@ public class BoardFragment extends Fragment{
         recyclerView.setLayoutManager(layoutManager);*/
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(manager);
+
+        LinearSnapHelper linearSnapHelper = new SnapHelperOneByOne();
+        linearSnapHelper.attachToRecyclerView(recyclerView);
+
         list = new ArrayList<>(); // User 객체를 담을 어레이 리스트 (어댑터쪽으로)
         database = FirebaseDatabase.getInstance(); // 파이어베이스 데이터베이스 연동
         databaseReference = database.getReference("Board"); // DB 테이블 연결
@@ -79,6 +84,42 @@ public class BoardFragment extends Fragment{
         recyclerView.setAdapter(adapter); // 리사이클러뷰에 어댑터 연결
 
         return rootView;
+    }
+
+    public class SnapHelperOneByOne extends LinearSnapHelper {
+
+        @Override
+        public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
+
+            if (!(layoutManager instanceof RecyclerView.SmoothScroller.ScrollVectorProvider)) {
+                return RecyclerView.NO_POSITION;
+            }
+
+            final View currentView = findSnapView(layoutManager);
+
+            if (currentView == null) {
+                return RecyclerView.NO_POSITION;
+            }
+
+            LinearLayoutManager myLayoutManager = (LinearLayoutManager) layoutManager;
+
+            int position1 = myLayoutManager.findFirstVisibleItemPosition();
+            int position2 = myLayoutManager.findLastVisibleItemPosition();
+
+            int currentPosition = layoutManager.getPosition(currentView);
+
+            if (velocityX > 400) {
+                currentPosition = position2;
+            } else if (velocityX < 400) {
+                currentPosition = position1;
+            }
+
+            if (currentPosition == RecyclerView.NO_POSITION) {
+                return RecyclerView.NO_POSITION;
+            }
+
+            return currentPosition;
+        }
     }
 
 
