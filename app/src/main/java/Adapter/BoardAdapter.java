@@ -1,7 +1,9 @@
 package Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,9 +57,16 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
     @Override
     public void onBindViewHolder(Holder holder, int position) {
         // 각 위치에 문자열 세팅
+        final Board board = list.get(position);
 
-        holder.nametext.setText(list.get(position).getName());
-        holder.titletext.setText(list.get(position).getTitle());
+        if (board.isMatch()) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
+        else{
+            holder.nametext.setText(list.get(position).getName());
+            holder.titletext.setText(list.get(position).getTitle());
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -72,7 +81,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.Holder>{
 
             }
         });
-        //클릭하면 채팅창으로 이동
+
     }
 
     // 몇개의 데이터를 리스트로 뿌려줘야하는지 반드시 정의해줘야한다

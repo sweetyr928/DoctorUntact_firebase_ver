@@ -5,6 +5,15 @@ public class Board {
     public String name;
     public String title;
     public String id;
+    public boolean match;
+
+    public boolean isMatch() {
+        return match;
+    }
+
+    public void setMatch(boolean match) {
+        this.match = match;
+    }
 
     public String getId() {
         return id;
